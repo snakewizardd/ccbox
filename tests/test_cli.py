@@ -4,9 +4,9 @@ from unittest.mock import patch, MagicMock
 import sys
 import os
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from myproject.cli import main
+from seismowatch.cli import main
 
 class TestCLI:
     def setup_method(self):
@@ -28,14 +28,14 @@ class TestCLI:
         assert 'MyProject' in result.output
         assert 'versatile Python toolkit' in result.output
     
-    @patch('myproject.cli.demo_visualizations')
+    @patch('seismowatch.cli.demo_visualizations')
     def test_geo_demo_command(self, mock_demo):
         result = self.runner.invoke(main, ['geo-demo'])
         assert result.exit_code == 0
         assert 'Creating geospatial demo visualizations' in result.output
         mock_demo.assert_called_once()
     
-    @patch('myproject.cli.GeoVisualizer')
+    @patch('seismowatch.cli.GeoVisualizer')
     def test_geocode_command_success(self, mock_geo_viz):
         mock_instance = MagicMock()
         mock_instance.geocode_address.return_value = (40.7128, -74.0060)
@@ -47,7 +47,7 @@ class TestCLI:
         assert '40.712800' in result.output
         assert '-74.006000' in result.output
     
-    @patch('myproject.cli.GeoVisualizer')
+    @patch('seismowatch.cli.GeoVisualizer')
     def test_geocode_command_failure(self, mock_geo_viz):
         mock_instance = MagicMock()
         mock_instance.geocode_address.return_value = None
@@ -57,7 +57,7 @@ class TestCLI:
         assert result.exit_code == 0
         assert 'Could not geocode' in result.output
     
-    @patch('myproject.cli.GeoVisualizer')
+    @patch('seismowatch.cli.GeoVisualizer')
     def test_create_map_command(self, mock_geo_viz):
         mock_instance = MagicMock()
         mock_map = MagicMock()
@@ -71,7 +71,7 @@ class TestCLI:
         mock_map.save.assert_called_once_with('map.html')
     
     def test_create_map_custom_output(self):
-        with patch('myproject.cli.GeoVisualizer') as mock_geo_viz:
+        with patch('seismowatch.cli.GeoVisualizer') as mock_geo_viz:
             mock_instance = MagicMock()
             mock_map = MagicMock()
             mock_instance.create_basic_map.return_value = mock_map

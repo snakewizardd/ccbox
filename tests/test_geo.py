@@ -5,9 +5,9 @@ from unittest.mock import patch, MagicMock
 import sys
 import os
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from myproject.geo import GeoVisualizer, create_sample_data
+from seismowatch.geo import GeoVisualizer, create_sample_data
 
 class TestGeoVisualizer:
     def setup_method(self):
@@ -37,7 +37,7 @@ class TestGeoVisualizer:
         # Map has default tile layer + 2 markers = 3 children
         assert len(result_map._children) == 3
     
-    @patch('myproject.geo.Nominatim')
+    @patch('seismowatch.geo.Nominatim')
     def test_geocode_address_success(self, mock_nominatim):
         mock_geocoder = MagicMock()
         mock_location = MagicMock()
@@ -52,7 +52,7 @@ class TestGeoVisualizer:
         assert result == (40.7128, -74.0060)
         mock_geocoder.geocode.assert_called_once_with("Times Square")
     
-    @patch('myproject.geo.Nominatim')
+    @patch('seismowatch.geo.Nominatim')
     def test_geocode_address_failure(self, mock_nominatim):
         mock_geocoder = MagicMock()
         mock_geocoder.geocode.return_value = None
@@ -63,7 +63,7 @@ class TestGeoVisualizer:
         
         assert result is None
     
-    @patch('myproject.geo.Nominatim')
+    @patch('seismowatch.geo.Nominatim')
     def test_geocode_address_exception(self, mock_nominatim):
         mock_geocoder = MagicMock()
         mock_geocoder.geocode.side_effect = Exception("Network error")

@@ -3,9 +3,9 @@ import json
 import sys
 import os
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from myproject.web import create_app
+from seismowatch.web import create_app
 
 class TestWebApp:
     def setup_method(self):
@@ -17,13 +17,11 @@ class TestWebApp:
         response = self.client.get('/')
         assert response.status_code == 200
         
-        data = json.loads(response.data)
-        assert 'message' in data
-        assert 'Welcome to MyProject!' in data['message']
-        assert 'version' in data
-        assert data['version'] == '0.1.0'
-        assert 'endpoints' in data
-        assert isinstance(data['endpoints'], list)
+        # Home route now returns HTML dashboard
+        assert 'text/html' in response.content_type
+        html_content = response.data.decode('utf-8')
+        assert 'Earthquake Dashboard' in html_content
+        assert 'SeismoWatch' in html_content or 'earthquake' in html_content.lower()
     
     def test_info_route(self):
         response = self.client.get('/api/info')
@@ -36,7 +34,7 @@ class TestWebApp:
         assert isinstance(data['capabilities'], list)
         assert 'CLI' in data['capabilities']
         assert 'Web API' in data['capabilities']
-        assert 'Data Analysis' in data['capabilities']
+        assert 'Earthquake Monitoring' in data['capabilities']
     
     def test_health_route(self):
         response = self.client.get('/api/health')
@@ -50,11 +48,22 @@ class TestWebApp:
         assert response.status_code == 404
     
     def test_response_content_type(self):
+        # Home route returns HTML
         response = self.client.get('/')
-        assert response.content_type == 'application/json'
+        assert 'text/html' in response.content_type
         
+        # API routes return JSON
         response = self.client.get('/api/info')
         assert response.content_type == 'application/json'
         
         response = self.client.get('/api/health')
         assert response.content_type == 'application/json'
+    
+    def test_earthquakes_api(self):
+        response = self.client.get('/api/earthquakes')
+        assert response.status_code == 200
+        
+        data = json.loads(response.data)
+        assert 'earthquakes' in data
+        assert 'count' in data
+        assert isinstance(data['earthquakes'], list)
