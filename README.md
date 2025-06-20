@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://img.shields.io/badge/tests-passing-green.svg)](#testing)
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](https://earthquake-dashboard.github.io)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](https://snakewizardd.github.io/ccbox)
 
 A comprehensive **real-time earthquake monitoring platform** that provides live seismic data, intelligent alerts, and beautiful visualizations. Built with Python, Flask, and modern web technologies.
 
@@ -47,8 +47,8 @@ A comprehensive **real-time earthquake monitoring platform** that provides live 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/seismowatch.git
-cd seismowatch
+git clone https://github.com/snakewizardd/ccbox.git
+cd ccbox
 
 # Create virtual environment
 python -m venv venv
@@ -84,6 +84,8 @@ python -m seismowatch dashboard
 ```
 
 ## 📖 Documentation
+
+See the [docs directory](docs/) for additional guides and examples.
 
 ### CLI Commands
 
@@ -264,7 +266,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/seismowatch&type=Date)](https://star-history.com/#yourusername/seismowatch&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=snakewizardd/ccbox&type=Date)](https://star-history.com/#snakewizardd/ccbox&Date)
 
 ---
 
