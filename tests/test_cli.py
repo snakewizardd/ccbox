@@ -25,7 +25,7 @@ class TestCLI:
     def test_info_command(self):
         result = self.runner.invoke(main, ['info'])
         assert result.exit_code == 0
-        assert 'MyProject' in result.output
+        assert 'SeismoWatch' in result.output
         assert 'versatile Python toolkit' in result.output
     
     @patch('seismowatch.cli.demo_visualizations')

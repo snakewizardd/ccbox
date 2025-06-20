@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 """Simple earthquake dashboard without WebSocket complications."""
 
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
-
 from flask import Flask, render_template_string, jsonify
-from myproject.earthquakes import EarthquakeDataFetcher
+from seismowatch.earthquakes import EarthquakeDataFetcher
 import json
 
 app = Flask(__name__)
