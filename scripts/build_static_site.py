@@ -212,7 +212,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
     color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     min-height: 100vh;
 }
 
@@ -272,6 +272,8 @@ body {
     text-align: center;
     color: white;
     padding: 8rem 2rem 4rem;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
 }
 
 .hero-title {
@@ -307,12 +309,12 @@ body {
 }
 
 .btn-primary {
-    background: #ff6b6b;
+    background: #ff4757;
     color: white;
 }
 
 .btn-primary:hover {
-    background: #ff5252;
+    background: #ff2f40;
     transform: translateY(-2px);
 }
 
@@ -601,8 +603,8 @@ class EarthquakeMonitor {
 
     async loadInitialStats() {
         try {
-            const response = await fetch('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + 
-                new Date(Date.now() - 24*60*60*1000).toISOString().split('T')[0] + '&minmagnitude=2.5');
+            const response = await fetch('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' +
+                new Date(Date.now() - 24*60*60*1000).toISOString() + '&minmagnitude=4.0');
             const data = await response.json();
             
             if (data.features) {
@@ -652,7 +654,7 @@ class EarthquakeMonitor {
                 this.earthquakeLayer.clearLayers();
             }
             
-            const yesterday = new Date(Date.now() - 24*60*60*1000).toISOString().split('T')[0];
+            const yesterday = new Date(Date.now() - 24*60*60*1000).toISOString();
             const response = await fetch(
                 `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${yesterday}&minmagnitude=4.0&limit=100`
             );
