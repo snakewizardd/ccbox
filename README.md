@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://img.shields.io/badge/tests-passing-green.svg)](#testing)
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](https://earthquake-dashboard.github.io)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen.svg)](https://snakewizardd.github.io/ccbox)
 
 A comprehensive **real-time earthquake monitoring platform** that provides live seismic data, intelligent alerts, and beautiful visualizations. Built with Python, Flask, and modern web technologies.
 
@@ -21,19 +21,15 @@ A comprehensive **real-time earthquake monitoring platform** that provides live 
 - **Interactive maps** powered by Leaflet.js
 - **Heatmaps** showing earthquake density
 - **Timeline visualizations** of seismic activity
-- **3D depth analysis** and cross-sections
 
 ### 🚨 **Intelligent Alerting**
 - **Custom alert zones** with radius and magnitude filters
 - **Multiple notification channels** (console, email, file logging)
 - **Smart deduplication** prevents alert spam
-- **Escalating alerts** for major seismic events
 
 ### 📊 **Analytics & Insights**
 - **Real-time statistics** and trends
-- **Historical data analysis** 
 - **Magnitude distribution** charts
-- **Regional activity patterns**
 
 ### 🛠️ **Developer Tools**
 - **CLI interface** for all operations
@@ -47,8 +43,8 @@ A comprehensive **real-time earthquake monitoring platform** that provides live 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/seismowatch.git
-cd seismowatch
+git clone https://github.com/snakewizardd/ccbox.git
+cd ccbox
 
 # Create virtual environment
 python -m venv venv
@@ -84,6 +80,8 @@ python -m seismowatch dashboard
 ```
 
 ## 📖 Documentation
+
+See the [docs directory](docs/) for additional guides and examples.
 
 ### CLI Commands
 
@@ -184,6 +182,17 @@ pytest tests/test_alerts.py
 pytest tests/test_web.py
 ```
 
+## 🌐 Sample Servers
+
+Two small Flask apps are provided for manual testing:
+
+```bash
+python sample_server.py
+python minimal_server.py
+```
+
+These scripts simply confirm that Flask is working and are not part of the automated tests.
+
 ## 🏗️ Architecture
 
 ```
@@ -228,10 +237,7 @@ flake8 seismowatch/ tests/
 
 ## 📈 Performance
 
-- **Sub-second response times** for earthquake data
-- **30-second update intervals** for live monitoring  
-- **Handles 1000+ concurrent users**
-- **99.9% uptime** with proper deployment
+- **30-second update intervals** for live monitoring
 
 ## 🔒 Security
 
@@ -253,7 +259,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/seismowatch&type=Date)](https://star-history.com/#yourusername/seismowatch&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=snakewizardd/ccbox&type=Date)](https://star-history.com/#snakewizardd/ccbox&Date)
 
 ---
 
