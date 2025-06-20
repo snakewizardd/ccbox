@@ -21,19 +21,15 @@ A comprehensive **real-time earthquake monitoring platform** that provides live 
 - **Interactive maps** powered by Leaflet.js
 - **Heatmaps** showing earthquake density
 - **Timeline visualizations** of seismic activity
-- **3D depth analysis** and cross-sections
 
 ### 🚨 **Intelligent Alerting**
 - **Custom alert zones** with radius and magnitude filters
 - **Multiple notification channels** (console, email, file logging)
 - **Smart deduplication** prevents alert spam
-- **Escalating alerts** for major seismic events
 
 ### 📊 **Analytics & Insights**
 - **Real-time statistics** and trends
-- **Historical data analysis** 
 - **Magnitude distribution** charts
-- **Regional activity patterns**
 
 ### 🛠️ **Developer Tools**
 - **CLI interface** for all operations
@@ -241,10 +237,7 @@ flake8 seismowatch/ tests/
 
 ## 📈 Performance
 
-- **Sub-second response times** for earthquake data
-- **30-second update intervals** for live monitoring  
-- **Handles 1000+ concurrent users**
-- **99.9% uptime** with proper deployment
+- **30-second update intervals** for live monitoring
 
 ## 🔒 Security
 
