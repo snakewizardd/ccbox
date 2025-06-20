@@ -20,20 +20,21 @@ def create_index_html():
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://seismowatch.github.io/">
+    <meta property="og:url" content="https://snakewizardd.github.io/ccbox/">
     <meta property="og:title" content="SeismoWatch - Real-time Earthquake Monitoring">
     <meta property="og:description" content="Monitor earthquakes worldwide with real-time alerts and beautiful visualizations">
-    <meta property="og:image" content="https://seismowatch.github.io/assets/og-image.png">
+    <meta property="og:image" content="https://snakewizardd.github.io/ccbox/assets/og-image.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://seismowatch.github.io/">
+    <meta property="twitter:url" content="https://snakewizardd.github.io/ccbox/">
     <meta property="twitter:title" content="SeismoWatch - Real-time Earthquake Monitoring">
     <meta property="twitter:description" content="Monitor earthquakes worldwide with real-time alerts and beautiful visualizations">
-    <meta property="twitter:image" content="https://seismowatch.github.io/assets/og-image.png">
+    <meta property="twitter:image" content="https://snakewizardd.github.io/ccbox/assets/og-image.png">
     
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="assets/styles.css">
 </head>
@@ -46,7 +47,7 @@ def create_index_html():
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#dashboard">Dashboard</a>
-                <a href="https://github.com/seismowatch/seismowatch">GitHub</a>
+                <a href="https://github.com/snakewizardd/ccbox">GitHub</a>
             </div>
         </div>
     </nav>
@@ -57,7 +58,7 @@ def create_index_html():
             <p class="hero-subtitle">Stay informed about seismic activity worldwide with live alerts, interactive maps, and intelligent monitoring.</p>
             <div class="hero-buttons">
                 <a href="#dashboard" class="btn btn-primary">View Live Dashboard</a>
-                <a href="https://github.com/seismowatch/seismowatch" class="btn btn-secondary">View on GitHub</a>
+                <a href="https://github.com/snakewizardd/ccbox" class="btn btn-secondary">View on GitHub</a>
             </div>
         </div>
         <div class="hero-stats">
@@ -147,6 +148,17 @@ def create_index_html():
         </div>
     </section>
 
+    <section id="analytics" class="analytics-section">
+        <div class="container">
+            <h2>Seismic Analytics</h2>
+            <p class="section-subtitle">Trends from the last 24 hours</p>
+            <div class="charts-container">
+                <canvas id="mag-chart" class="chart"></canvas>
+                <canvas id="hourly-chart" class="chart"></canvas>
+            </div>
+        </div>
+    </section>
+
     <section class="installation">
         <div class="container">
             <h2>Get Started</h2>
@@ -176,9 +188,9 @@ def create_index_html():
                 </div>
                 <div class="footer-section">
                     <h3>Links</h3>
-                    <a href="https://github.com/seismowatch/seismowatch">GitHub</a>
-                    <a href="https://seismowatch.readthedocs.io/">Documentation</a>
-                    <a href="https://github.com/seismowatch/seismowatch/issues">Issues</a>
+                    <a href="https://github.com/snakewizardd/ccbox">GitHub</a>
+                    <a href="docs/">Documentation</a>
+                    <a href="https://github.com/snakewizardd/ccbox/issues">Issues</a>
                 </div>
                 <div class="footer-section">
                     <h3>Data Sources</h3>
@@ -461,6 +473,26 @@ body {
     color: #666;
 }
 
+/* Analytics section */
+.analytics-section {
+    background: #f8f9fa;
+    padding: 6rem 0;
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
 /* Installation section */
 .installation {
     background: white;
@@ -588,12 +620,15 @@ class EarthquakeMonitor {
         this.map = null;
         this.earthquakeLayer = null;
         this.earthquakes = [];
+        this.magChart = null;
+        this.hourlyChart = null;
         this.init();
     }
 
     init() {
         this.loadInitialStats();
         this.initMap();
+        this.initCharts();
         this.loadEarthquakeData();
         this.setupEventListeners();
         
@@ -637,6 +672,31 @@ class EarthquakeMonitor {
         this.earthquakeLayer = L.layerGroup().addTo(this.map);
     }
 
+    initCharts() {
+        const magCtx = document.getElementById('mag-chart');
+        const hourCtx = document.getElementById('hourly-chart');
+        if (magCtx) {
+            this.magChart = new Chart(magCtx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['4-4.9', '5-5.9', '6-6.9', '7+'],
+                    datasets: [{
+                        data: [0, 0, 0, 0],
+                        backgroundColor: ['#FFD700', '#FF4500', '#DC143C', '#8B0000']
+                    }]
+                },
+                options: { plugins: { legend: { display: false } }, responsive: true }
+            });
+        }
+        if (hourCtx) {
+            this.hourlyChart = new Chart(hourCtx.getContext('2d'), {
+                type: 'line',
+                data: { labels: [], datasets: [{ data: [], borderColor: '#ff6b6b', fill: false }] },
+                options: { plugins: { legend: { display: false } }, responsive: true, scales: { x: { title: { display: true, text: 'Hour (UTC)' } } } }
+            });
+        }
+    }
+
     getMagnitudeColor(magnitude) {
         if (magnitude >= 8) return '#4B0082';  // Purple
         if (magnitude >= 7) return '#8B0000';  // Dark Red  
@@ -673,6 +733,7 @@ class EarthquakeMonitor {
             this.earthquakes = data.features;
             this.updateStats();
             this.updateMap();
+            this.renderCharts();
             
         } catch (error) {
             console.error('Error loading earthquake data:', error);
@@ -741,6 +802,26 @@ class EarthquakeMonitor {
         });
         
         console.log(`Added ${this.earthquakes.length} earthquakes to map`);
+    }
+
+    renderCharts() {
+        if (!this.magChart || !this.hourlyChart) return;
+
+        const magBuckets = [0, 0, 0, 0];
+        const hourly = Array(24).fill(0);
+        this.earthquakes.forEach(eq => {
+            const m = eq.properties.mag || 0;
+            if (m >= 7) magBuckets[3]++; else if (m >= 6) magBuckets[2]++; else if (m >= 5) magBuckets[1]++; else if (m >= 4) magBuckets[0]++;
+            const h = new Date(eq.properties.time).getUTCHours();
+            hourly[h]++;
+        });
+
+        this.magChart.data.datasets[0].data = magBuckets;
+        this.magChart.update();
+
+        this.hourlyChart.data.labels = hourly.map((_, i) => i.toString());
+        this.hourlyChart.data.datasets[0].data = hourly;
+        this.hourlyChart.update();
     }
 
     updateLoadingState(isLoading) {
@@ -819,6 +900,10 @@ def build_site():
     
     dist_dir.mkdir()
     assets_dir.mkdir()
+
+    docs_src = Path("docs")
+    if docs_src.exists():
+        shutil.copytree(docs_src, dist_dir / "docs")
     
     # Create main files
     with open(dist_dir / "index.html", "w") as f:

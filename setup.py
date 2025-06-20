@@ -20,7 +20,7 @@ setup(
     description="Real-time earthquake monitoring platform with alerts and visualizations",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/seismowatch/seismowatch",
+    url="https://github.com/snakewizardd/ccbox",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -67,9 +67,9 @@ setup(
     },
     keywords="earthquake, seismic, monitoring, alerts, visualization, geospatial, usgs",
     project_urls={
-        "Bug Reports": "https://github.com/seismowatch/seismowatch/issues",
-        "Source": "https://github.com/seismowatch/seismowatch",
-        "Documentation": "https://seismowatch.readthedocs.io/",
-        "Demo": "https://seismowatch.github.io/",
+        "Bug Reports": "https://github.com/snakewizardd/ccbox/issues",
+        "Source": "https://github.com/snakewizardd/ccbox",
+        "Documentation": "https://snakewizardd.github.io/ccbox/docs/",
+        "Demo": "https://snakewizardd.github.io/ccbox/",
     },
 )
