@@ -3,6 +3,7 @@ from click.testing import CliRunner
 from unittest.mock import patch, MagicMock
 import sys
 import os
+import runpy
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
@@ -81,3 +82,8 @@ class TestCLI:
             assert result.exit_code == 0
             assert 'Map saved to custom.html' in result.output
             mock_map.save.assert_called_once_with('custom.html')
+
+    def test_module_execution_invokes_cli(self):
+        with patch('seismowatch.cli.main') as mock_main:
+            runpy.run_module('seismowatch', run_name='__main__')
+            mock_main.assert_called_once()
