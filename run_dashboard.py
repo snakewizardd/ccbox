@@ -8,13 +8,7 @@ This fixes the eventlet import order issue.
 import eventlet
 eventlet.monkey_patch()
 
-import sys
-import os
-
-# Add src to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
-
-from myproject.dashboard import create_dashboard
+from seismowatch.dashboard import create_dashboard
 
 if __name__ == '__main__':
     print('🌐 Launching Real-time Earthquake Dashboard...')
