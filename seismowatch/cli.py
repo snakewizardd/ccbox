@@ -19,7 +19,7 @@ def hello(name):
 @main.command()
 def info():
     """Show project information."""
-    click.echo('MyProject - A versatile Python toolkit')
+    click.echo('SeismoWatch - A versatile Python toolkit')
     click.echo('Ready for CLI, web, and data analysis tasks!')
 
 @main.command()

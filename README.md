@@ -184,6 +184,17 @@ pytest tests/test_alerts.py
 pytest tests/test_web.py
 ```
 
+## 🌐 Sample Servers
+
+Two small Flask apps are provided for manual testing:
+
+```bash
+python sample_server.py
+python minimal_server.py
+```
+
+These scripts simply confirm that Flask is working and are not part of the automated tests.
+
 ## 🏗️ Architecture
 
 ```

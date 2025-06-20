@@ -2,6 +2,8 @@ import pytest
 import json
 import sys
 import os
+import pandas as pd
+from unittest.mock import patch
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
@@ -28,7 +30,7 @@ class TestWebApp:
         assert response.status_code == 200
         
         data = json.loads(response.data)
-        assert data['project'] == 'MyProject'
+        assert data['project'] == 'SeismoWatch'
         assert 'description' in data
         assert 'capabilities' in data
         assert isinstance(data['capabilities'], list)
@@ -59,11 +61,23 @@ class TestWebApp:
         response = self.client.get('/api/health')
         assert response.content_type == 'application/json'
     
-    def test_earthquakes_api(self):
+    @patch('seismowatch.web.EarthquakeDataFetcher')
+    def test_earthquakes_api(self, mock_fetcher_cls):
+        mock_fetcher = mock_fetcher_cls.return_value
+        mock_fetcher.fetch_earthquakes.return_value = pd.DataFrame([
+            {
+                'magnitude': 5.0,
+                'place': 'Testville',
+                'latitude': 1.0,
+                'longitude': 2.0,
+                'depth': 10.0,
+                'time': pd.Timestamp('2020-01-01T00:00:00')
+            }
+        ])
+
         response = self.client.get('/api/earthquakes')
         assert response.status_code == 200
-        
+
         data = json.loads(response.data)
-        assert 'earthquakes' in data
-        assert 'count' in data
+        assert data['count'] == 1
         assert isinstance(data['earthquakes'], list)

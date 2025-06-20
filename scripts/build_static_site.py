@@ -601,8 +601,8 @@ class EarthquakeMonitor {
 
     async loadInitialStats() {
         try {
-            const response = await fetch('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + 
-                new Date(Date.now() - 24*60*60*1000).toISOString().split('T')[0] + '&minmagnitude=2.5');
+            const response = await fetch('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' +
+                new Date(Date.now() - 24*60*60*1000).toISOString() + '&minmagnitude=2.5');
             const data = await response.json();
             
             if (data.features) {
@@ -652,7 +652,7 @@ class EarthquakeMonitor {
                 this.earthquakeLayer.clearLayers();
             }
             
-            const yesterday = new Date(Date.now() - 24*60*60*1000).toISOString().split('T')[0];
+            const yesterday = new Date(Date.now() - 24*60*60*1000).toISOString();
             const response = await fetch(
                 `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${yesterday}&minmagnitude=4.0&limit=100`
             );

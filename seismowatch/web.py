@@ -137,7 +137,7 @@ def create_app():
     @app.route('/api/info')
     def info():
         return jsonify({
-            'project': 'MyProject',
+            'project': 'SeismoWatch',
             'description': 'A versatile Python toolkit with earthquake monitoring',
             'capabilities': ['CLI', 'Web API', 'Earthquake Monitoring', 'Geospatial Analysis']
         })
